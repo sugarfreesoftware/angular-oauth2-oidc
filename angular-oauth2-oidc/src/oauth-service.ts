@@ -1533,6 +1533,31 @@ export class OAuthService extends AuthConfig {
     public authorizationHeader(): string {
         return 'Bearer ' + this.getAccessToken();
     }
+    
+    public getAuthorizationHeader(): Promise<string> {
+
+        if (this.hasValidAccessToken()) {
+            return Promise.resolve(this.authorizationHeader());
+        } 
+
+        let refreshToken = this.getRefreshToken();
+        if (!refreshToken) {
+            this.clearStorage();
+            return Promise.reject("No refresh token available");
+        }
+
+        console.log("Session no longer valid. Try to get new one using refresh token");
+        return this.refreshToken().then(result => {
+            if (this.hasValidAccessToken()) {
+                return Promise.resolve(this.authorizationHeader());
+            } 
+
+            return Promise.reject("Unable to refresh token");
+        }).catch(reason => {
+            this.clearStorage();
+            return Promise.reject("Unable to refresh token - " + reason);
+        });
+    }
 
     /**
      * Removes all tokens and logs the user out.
@@ -1542,15 +1567,7 @@ export class OAuthService extends AuthConfig {
      */
     public logOut(noRedirectToLogoutUrl = false): void {
         let id_token = this.getIdToken();
-        this._storage.removeItem('access_token');
-        this._storage.removeItem('id_token');
-        this._storage.removeItem('refresh_token');
-        this._storage.removeItem('nonce');
-        this._storage.removeItem('expires_at');
-        this._storage.removeItem('id_token_claims_obj');
-        this._storage.removeItem('id_token_expires_at');
-        this._storage.removeItem('id_token_stored_at');
-        this._storage.removeItem('access_token_stored_at');
+        this.clearStorage();
 
         this.silentRefreshSubject = null;
       
@@ -1580,6 +1597,18 @@ export class OAuthService extends AuthConfig {
         }
         location.href = logoutUrl;
     };
+
+    private clearStorage() {
+        this._storage.removeItem('access_token');
+        this._storage.removeItem('id_token');
+        this._storage.removeItem('refresh_token');
+        this._storage.removeItem('nonce');
+        this._storage.removeItem('expires_at');
+        this._storage.removeItem('id_token_claims_obj');
+        this._storage.removeItem('id_token_expires_at');
+        this._storage.removeItem('id_token_stored_at');
+        this._storage.removeItem('access_token_stored_at');
+    }
 
     /**
      * @ignore
