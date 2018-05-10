@@ -186,6 +186,13 @@ export class AuthConfig {
      */
     public disableAtHashCheck? = false;
 
+    /**
+     * This property allows you to override the method that is used to open the login url,
+     * allowing a way for implementations to specify their own method of routing to new
+     * urls.
+     */
+    public openUri?: ((uri: string) => void) = (uri) => { location.href = uri; }
+
 
     /*
      * Defines wether to check the subject of a refreshed token after silent refresh.
@@ -200,5 +207,26 @@ export class AuthConfig {
      * Normally, the discovey document's url starts with the url of the issuer.
      */
     public skipIssuerCheck? = false;
+
+    /**
+     * According to rfc6749 it is recommended (but not required) that the auth 
+     * server exposes the access_token's life time in seconds. 
+     * This is a fallback value for the case this value is not exposed.
+     */
+    public fallbackAccessTokenExpirationTimeInSec?: number;
+
+    /*
+     * final state sent to issuer is built as follows:
+     * state = nonce + nonceStateSeparator + additional state
+     * Default separator is ';' (encoded %3B).
+     * In rare cases, this character might be forbidden or inconvenient to use by the issuer so it can be customized.
+     */
+    public nonceStateSeparator? = ';';    
+    
+    constructor(json?: Partial<AuthConfig>) {
+    if (json) {
+      Object.assign(this, json);
+    }
+  }
     
 }
