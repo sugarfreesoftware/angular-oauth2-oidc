@@ -1154,7 +1154,9 @@ export class OAuthService
 
     private storeAccessTokenResponse(accessToken: string, refreshToken: string, expiresIn: number, grantedScopes: String): void {
         this._storage.setItem('access_token', accessToken);
-        this._storage.setItem('granted_scopes', JSON.stringify(grantedScopes.split('+')));
+        if (grantedScopes) {
+            this._storage.setItem('granted_scopes', JSON.stringify(grantedScopes.split('+')));
+        }
         this._storage.setItem('access_token_stored_at', '' + Date.now());
         if (expiresIn) {
             let expiresInMilliSeconds = expiresIn * 1000;
