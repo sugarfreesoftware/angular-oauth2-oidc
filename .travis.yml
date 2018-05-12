@@ -5,4 +5,5 @@ node_js:
   
 before_script:
   - npm install -g gulp-cli
-script: angular-oauth2-oidc/gulp build
+  - cd angular-oauth2-oidc
+script: gulp build
