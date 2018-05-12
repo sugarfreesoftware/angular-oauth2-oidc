@@ -4,6 +4,7 @@ node_js:
   
 before_script:
   - cd angular-oauth2-oidc
+  - npm install
   - npm ll rxjs
   - npm install -g gulp-cli
 
