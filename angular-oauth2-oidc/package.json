@@ -57,7 +57,7 @@
     "protractor": "~5.1.0",
     "rollup": "^0.58.2",
     "run-sequence": "^1.2.2",
-    "rxjs": "^6.0.0",
+    "rxjs": "^6.1.0",
     "ts-node": "~2.0.0",
     "tslint": "~5.7.0",
     "typescript": "~2.7.2",
