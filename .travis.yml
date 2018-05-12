@@ -2,8 +2,9 @@ language: node_js
 node_js:
   - "node"
   
-before_install: cd project
+before_install: 
   - cd angular-oauth2-oidc
+  
 before_script:
   - npm install -g gulp-cli
 
