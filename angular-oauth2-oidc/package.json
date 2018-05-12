@@ -30,7 +30,7 @@
   "devDependencies": {
     "@angular/common": "^6.0.0",
     "@angular/compiler": "^6.0.0",
-    "@angular/compiler-cli": "^6.0.0",
+    "@angular/compiler-cli": "^6.0.1",
     "@angular/core": "^6.0.0",
     "@angular/platform-browser": "^6.0.0",
     "@angular/platform-browser-dynamic": "^6.0.0",
@@ -67,6 +67,7 @@
     "node": ">=6.0.0"
   },
   "dependencies": {
+    "@angular/cli": "^6.0.1",
     "@compodoc/compodoc": "^1.0.4",
     "jsrsasign": "^8.0.3"
   }

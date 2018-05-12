@@ -1102,7 +1102,7 @@ export class OAuthService
         if (this.loginUrl !== '') {
             this.initAuthorizationCodeFlowInternal();
         } else {
-            this.events.filter(e => e.type === 'discovery_document_loaded')
+            this.events.pipe(filter(e => e.type === 'discovery_document_loaded'))
             .subscribe(_ => this.initAuthorizationCodeFlowInternal());
         }
     }
