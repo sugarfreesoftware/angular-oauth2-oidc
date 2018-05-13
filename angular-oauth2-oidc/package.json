@@ -1,5 +1,5 @@
 {
-  "name": "angular-oauth2-oidc",
+  "name": "angular-oauth2-oidc-codeflow-build",
   "version": "0.1.0",
   "scripts": {
     "tsc": "tsc",
@@ -14,18 +14,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/manfredsteyer/angular-oauth2-oidc"
+    "url": "https://github.com/bechhansen/angular-oauth2-oidc"
   },
   "author": {
-    "name": "ManfredSteyer",
-    "email": "manfred.steyer@gmx.net"
+    "name": "Peer Bech Hansen",
+    "email": "peer.bech.hansen@gmail.com"
   },
   "keywords": [
     "angular"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/manfredsteyer/angular-oauth2-oidc/issues"
+    "url": "https://github.com/bechhansen/angular-oauth2-oidc/issues"
   },
   "devDependencies": {
     "@angular/common": "^6.0.0",
@@ -57,7 +57,7 @@
     "protractor": "~5.1.0",
     "rollup": "^0.58.2",
     "run-sequence": "^1.2.2",
-    "rxjs": "^6.1.0",
+    "rxjs": "^6.0.0",
     "ts-node": "~2.0.0",
     "tslint": "~5.7.0",
     "typescript": "~2.7.2",
@@ -67,7 +67,6 @@
     "node": ">=6.0.0"
   },
   "dependencies": {
-    "@angular/cli": "^6.0.1",
     "@compodoc/compodoc": "^1.0.4",
     "jsrsasign": "^8.0.3"
   }
