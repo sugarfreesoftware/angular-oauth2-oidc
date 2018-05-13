@@ -11,6 +11,8 @@ before_script:
   
 script: gulp build
 
+before_deploy:
+  - cd src
 
 deploy:
   provider: npm
