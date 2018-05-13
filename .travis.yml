@@ -13,13 +13,12 @@ script: gulp build
 
 before_deploy:
   - cd dist
-  - pwd
-  - ls -al
 
 deploy:
   provider: npm
   email: $NPM_EMAIL
   api_key: $NPM_KEY
+  skip_cleanup: true
   
   on:
     tags: true
