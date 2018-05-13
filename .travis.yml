@@ -13,6 +13,8 @@ script: gulp build
 
 before_deploy:
   - cd dist
+  - pwd
+  - ls -al
 
 deploy:
   provider: npm
