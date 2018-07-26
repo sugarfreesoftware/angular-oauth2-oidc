@@ -703,7 +703,7 @@ export class OAuthService extends AuthConfig {
      * Get token using an intermediate code. Works for the Authorization Code flow.
      */
     private getTokenFromCode(code: string): Promise<object> {
-      let params = new HttpParams()
+      const params = new HttpParams()
         .set('grant_type', 'authorization_code')
         .set('code', code)
         .set('redirect_uri', this.redirectUri);
@@ -735,7 +735,11 @@ export class OAuthService extends AuthConfig {
         this.http.post<TokenResponse>(this.tokenEndpoint, params, { headers }).subscribe(
           (tokenResponse) => {
             this.debug('refresh tokenResponse', tokenResponse);
-            this.storeAccessTokenResponse(tokenResponse.access_token, tokenResponse.refresh_token, tokenResponse.expires_in, tokenResponse.scope);
+            this.storeAccessTokenResponse(
+              tokenResponse.access_token,
+              tokenResponse.refresh_token,
+              tokenResponse.expires_in,
+              tokenResponse.scope);
 
             if (this.oidc && tokenResponse.id_token) {
               this.processIdToken(tokenResponse.id_token, tokenResponse.access_token).
@@ -1093,7 +1097,7 @@ export class OAuthService extends AuthConfig {
 
         let nonce = null;
         if (!this.disableNonceCheck) {
-          let nonce = this.createAndSaveNonce();
+          nonce = this.createAndSaveNonce();
           if (state) {
             state = nonce + this.config.nonceStateSeparator + state;
           } else {
@@ -1161,7 +1165,7 @@ export class OAuthService extends AuthConfig {
 
         return Promise.resolve(url);
 
-    };
+    }
 
     initImplicitFlowInternal(
         additionalState = '',
@@ -1247,18 +1251,16 @@ export class OAuthService extends AuthConfig {
           console.error('Error in initAuthorizationCodeFlow');
           console.error(error);
         });
-    };
+    }
 
     private getResponseType(implicit: boolean): string {
 
       if (implicit) {
         if (this.oidc && this.requestAccessToken) {
           return 'id_token token';
-        }
-        else if (this.oidc && !this.requestAccessToken) {
+        } else if (this.oidc && !this.requestAccessToken) {
           return 'id_token';
-        }
-        else {
+        } else {
           return 'token';
         }
       } else {
@@ -1323,13 +1325,13 @@ export class OAuthService extends AuthConfig {
         } else {
           return this.tryLoginImplicit(options);
         }
-    };
+    }
 
     private tryLoginAuthorizationCode(): Promise<void> {
 
-        let parameter = window.location.search.split("?")[1].split("&");
-        let codeParam = parameter.filter(param => param.includes('code='));
-        let code = codeParam.length ? codeParam[0].split('code=')[1] : undefined;
+        const parameter = window.location.search.split('?')[1].split('&');
+        const codeParam = parameter.filter(param => param.includes('code='));
+        const code = codeParam.length ? codeParam[0].split('code=')[1] : undefined;
 
         if (code) {
           return new Promise((resolve, reject) => {
@@ -1785,22 +1787,22 @@ export class OAuthService extends AuthConfig {
         return Promise.resolve(this.authorizationHeader());
         }
 
-        let refreshToken = this.getRefreshToken();
+        const refreshToken = this.getRefreshToken();
         if (!refreshToken) {
         this.clearStorage();
-        return Promise.reject("No refresh token available");
+        return Promise.reject('No refresh token available');
         }
 
-        console.log("Session no longer valid. Try to get new one using refresh token");
+        console.log('Session no longer valid. Try to get new one using refresh token');
         return this.refreshToken().then(result => {
         if (this.hasValidAccessToken()) {
             return Promise.resolve(this.authorizationHeader());
         }
 
-        return Promise.reject("Unable to refresh token");
+        return Promise.reject('Unable to refresh token');
         }).catch(reason => {
         this.clearStorage();
-        return Promise.reject("Unable to refresh token - " + reason);
+        return Promise.reject('Unable to refresh token - ' + reason);
         });
     }
 
@@ -1869,26 +1871,26 @@ export class OAuthService extends AuthConfig {
      * @ignore
      */
     public createAndSaveNonce(): string {
-        let nonce = this.createNonce();
+        const nonce = this.createNonce();
         this._storage.setItem('nonce', nonce);
         return nonce;
-    };
+    }
 
     protected createNonce(): string {
 
         if (this.rngUrl) {
         throw new Error('createNonce with rng-web-api has not been implemented so far');
-        }
-        else {
+        } else {
         let text = '';
-        let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-        for (let i = 0; i < 40; i++)
+        for (let i = 0; i < 40; i++) {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
 
         return text;
         }
-    };
+    }
 
     private checkAtHash(params: ValidationParams): boolean {
         if (!this.tokenValidationHandler) {
