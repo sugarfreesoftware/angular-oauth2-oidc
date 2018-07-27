@@ -376,10 +376,17 @@ export class OAuthService extends AuthConfig {
                     }
 
                     this.loginUrl = doc.authorization_endpoint;
+
                     this.logoutUrl = doc.end_session_endpoint || this.logoutUrl;
                     this.grantTypesSupported = doc.grant_types_supported;
                     this.issuer = doc.issuer;
                     this.tokenEndpoint = doc.token_endpoint;
+
+                    // Change token url to use mediator endpoint instead.
+                    if (this.mediatorUrl) {
+                      this.tokenEndpoint = this.mediatorUrl;
+                    }
+
                     this.userinfoEndpoint = doc.userinfo_endpoint;
                     this.jwksUri = doc.jwks_uri;
                     this.sessionCheckIFrameUrl = doc.check_session_iframe || this.sessionCheckIFrameUrl;

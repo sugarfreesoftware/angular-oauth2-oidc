@@ -217,6 +217,11 @@ export class AuthConfig {
 
   public disableNonceCheck? = false;
 
+  /*
+  Mediator url, for mediator code flow.
+   */
+  public mediatorUrl?: string;
+
   constructor(json?: Partial<AuthConfig>) {
     if (json) {
       Object.assign(this, json);
